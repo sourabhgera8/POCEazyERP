@@ -13,17 +13,12 @@ import * as EmailValidator from 'email-validator';
 
 function CreateUserDetailRecord({ route, navigation }) {
 
-    const [lowbp, setLowbp] = useState('')
-    const [highbp, setHighbp] = useState('')
-    const [sugar, setSugar] = useState('')
-
-
     const [userName, setUserName] = useState('John')
     const [emailId, setEmailId] = useState('abc@gmail.com')
     const [contactNumber, setContactNumber] = useState('8826420913')
     const [selectedDate, setSelectedDate] = useState("18-02-1990");
-    const [address, setAddress] = useState("H no 13274 Fbd");
-    const [pincode, setPincode] = useState("121006");
+    const [address, setAddress] = useState("H no 2D 45 Fbd");
+    const [pincode, setPincode] = useState("121005");
    
     const [country, setCountry] = useState(0);
     const [countryError, setCountryError] = useState('');
@@ -51,7 +46,7 @@ function CreateUserDetailRecord({ route, navigation }) {
                 [],
                 function (tx, res) {
                     console.log('item:', res.rows.item(0));
-                    console.log("hi come here");
+                    console.log("hi come here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                     if (res.rows.length == 0) {
                         console.log("hi come here");
                         txn.executeSql('DROP TABLE IF EXISTS table_user', []);

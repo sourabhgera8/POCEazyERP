@@ -9,34 +9,39 @@ var db = openDatabase({ name: DATABASE_NAME });
 
 function UserKyc({ route, navigation }) {
 
-    const[lowbp, setLowbp] = useState('')
-    const[highbp , setHighbp] = useState('')
-    const[sugar, setSugar] = useState('')
-    const [selectedDate, setSelectedDate] = useState("");
+    const [gstNo, setGstNo] = useState('06AZMPG7542N1ZT')
+    const [panNumber, setPanNumber] = useState('ATGPK1212L')
+    const [aadharNumber, setAadharNumber] = useState('271245857962')
+    const [drivingLicense, setDrivingLicense] = useState('Dl2055512020')
+    const [voterId, setVoterId] = useState('IKR4452415')
+    const [upiId, setUpiId] = useState('sonu@icici.ok')
+
 
 
     useEffect(() => {
         createTable();
-       
     }, [])
 
     
 
     
     function createTable() {
+      console.log("hi come here user kyc --------dsdssda------------------ ");
+
         console.log('data', db)
         db.transaction(function (txn) {
             txn.executeSql(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user_kyc'",
                 [],
                 function (tx, res) {
                     console.log('item:', res.rows.item(0));
-                    console.log("hi come here");
+                    console.log("hi come here user kyc -------------------------- ");
                     if (res.rows.length == 0) {
                         console.log("hi come here");
-                        txn.executeSql('DROP TABLE IF EXISTS table_user', []);
+                        txn.executeSql('DROP TABLE IF EXISTS table_user_kyc', []);
                         txn.executeSql(
-                            'CREATE TABLE IF NOT EXISTS table_user(record_id INTEGER PRIMARY KEY AUTOINCREMENT, low_Bp INT(3), high_Bp INT(3), sugar INT(3), recordDate VARCHAR(100))',
+                            // 'CREATE TABLE IF NOT EXISTS table_user(record_id INTEGER PRIMARY KEY AUTOINCREMENT, low_Bp INT(3), high_Bp INT(3), sugar INT(3), recordDate VARCHAR(100))',
+                            'CREATE TABLE IF NOT EXISTS table_user_kyc(record_kyc_id INTEGER PRIMARY KEY AUTOINCREMENT, gstNo VARCHAR(15), panNumber VARCHAR(10), aadharNumber VARCHAR(12), drivingLicense VARCHAR(15), voterId VARCHAR(15), upiId VARCHAR(50) )',
                             []
                         );
                     }
@@ -45,57 +50,70 @@ function UserKyc({ route, navigation }) {
         });
     }
 
-    const onViewReport = () => {     
-        // alert(" come ")  
-        navigation.push('ReportScreen')
+    const onPressKycReport = () => {
+      // alert(" come ")  
+      navigation.push('ReportKycScreen')
     }
-    const handleClick = () => {       
-      console.log("K______", lowbp);
-      console.log("K______", highbp);
-      console.log("K______", sugar);
-      console.log("K______", selectedDate);
 
-      if(lowbp ===''){
-        alert(' Low bp cannot be blank');
+    const onPressKycSubmit = () => {
+      if (gstNo === '') {
+        alert("Gst number is empty")
         return;
-      }else if(highbp ===''){
-        alert(' High Bp cannot be blank');
+      } else if (panNumber === '') {
+        alert("Pan Number is empty")
         return;
-      }else if(sugar ===''){
-        alert(' Sugar cannot be blank');
+      } else if (aadharNumber === '') {
+        alert("Aadhar Number is empty")
         return;
-      }else if(selectedDate ==='' ){
-        alert(' date cannot be blank');
+      } else if (drivingLicense === '') {
+        alert("Driving License is empty")
         return;
-      }
+      } else if (voterId === '') {
+        alert("Voter Id is empty")
+        return;
+      } else if (upiId === '') {
+        alert("Upi Id is empty")
+        return;
+      } 
 
+
+      console.log("hSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 11111111111  ")
       db.transaction(function (tx) {
+        console.log("hSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 2222222222  ")
+
+        try{
         tx.executeSql(
-          'INSERT INTO table_user (low_Bp, high_Bp, sugar,recordDate) VALUES (?,?,?,?)',
-          [lowbp,highbp,sugar,selectedDate],
+          // 'INSERT INTO table_user (low_Bp, high_Bp, sugar,recordDate) VALUES (?,?,?,?)',
+          'INSERT INTO table_user_kyc (gstNo, panNumber, aadharNumber, drivingLicense, voterId, upiId ) VALUES (?,?,?,?,?,?)',
+          [gstNo,panNumber,aadharNumber,drivingLicense,voterId,upiId],
           (tx, results) => {
+            console.log("hSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 3333  ")
+
             console.log('Results_____________________ cretare', results.rowsAffected);
             if (results.rowsAffected > 0) {
               console.log("hi")
-              setLowbp('');
-              setHighbp('');
-              setSugar('');
-              setSelectedDate('');
+              
               Alert.alert(
                 'Success',
-                'You are Registered Successfully',
+                'User Kyc Detail Submitted Successfully',
                 [
                   {
                     text: 'Ok',
-                    onPress: () => navigation.push('ReportScreen'),
-                    // onPress: () => {alert(" 22222")}
+                    // onPress: () => navigation.push('ReportScreen'),
+                    onPress: () => {alert("Mr Gera are you good now Cool")}
                   },
                 ],
                 { cancelable: false }
               );
             } else alert('Registration Failed');
+            console.log("hSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 34233  ")
           }
+        
+          
         );
+          }catch(error){
+              console.log("Errrrrrrrrrrrrrrrrrrrrrrrrrr "+ error);
+          }
       });
     }
 
@@ -112,7 +130,9 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like 06ajcps1904l1z3'}
-                   
+                    onChangeText={text => setGstNo(text)}
+                    value={gstNo}
+                    defaultValue={gstNo}
                 />
             </View>
              <View style={{ marginBottom: 20, marginHorizontal: 40 }}>
@@ -124,7 +144,9 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like Azmpg7865E'}
-                   
+                    onChangeText={text => setPanNumber(text)}
+                    value={panNumber}
+                    defaultValue={panNumber}
                 />
             </View>
              <View style={{ marginBottom: 20, marginHorizontal: 40 }}>
@@ -136,6 +158,9 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like 124256859658'}
+                    onChangeText={text => setAadharNumber(text)}
+                    value={aadharNumber}
+                    defaultValue={aadharNumber}
                    
                 />
             </View>
@@ -148,6 +173,9 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like 255/2/2011'}
+                    onChangeText={text => setDrivingLicense(text)}
+                    value={drivingLicense}
+                    defaultValue={drivingLicense}
                    
                 />
             </View>
@@ -160,7 +188,9 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like Ikr00024356'}
-                   
+                    onChangeText={text => setVoterId(text)}
+                    value={voterId}
+                    defaultValue={voterId}
                 />
             </View>
              <View style={{ marginBottom: 20, marginHorizontal: 40 }}>
@@ -172,17 +202,27 @@ function UserKyc({ route, navigation }) {
                     maxLength={50}
                     keyboardType={'numeric'}
                     placeholder={'like Sourabh@icici.com'}
-                   
+                    onChangeText={text => setUpiId(text)}
+                    value={upiId}
+                    defaultValue={upiId}
                 />
             </View>
 
            
 
-            <View style={{ marginHorizontal: 40, marginTop: 30, marginVertical: 5 }}>
+            <View style={{ marginHorizontal: 40, marginTop: 10, marginVertical: 5 }}>
                 <Button style={{ flex: 1, marginTop: 10, marginBottom: 10, }}
                      color='#32CD32'
-                    title="Submits"
-                    onPress={onViewReport}
+                    title="Kyc Submit"
+                    onPress={onPressKycSubmit}
+                />
+            </View>
+
+            <View style={{ marginHorizontal: 40, marginTop: 15,marginBottom: 25, marginVertical: 5 }}>
+                <Button style={{ flex: 1, marginTop: 10,  }}
+                     color='#326542'
+                    title="View Kyc Report"
+                    onPress={onPressKycReport}
                 />
             </View>
 

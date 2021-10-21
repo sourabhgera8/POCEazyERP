@@ -7,6 +7,7 @@ import Activity from './apps/screens/Activity';
 import UserKyc from './apps/screens/UserKyc';
 import UserCompleteProfile from './apps/screens/UserCompleteProfile';
 import ReportScreen from './apps/screens/ReportScreen';
+import ReportKycScreen from './apps/screens/ReportKycScreen';
 
 const Stack = createNativeStackNavigator();
   
@@ -21,6 +22,7 @@ const Stack = createNativeStackNavigator();
           <Stack.Screen name="UserKyc" component={UserKyc} />
           <Stack.Screen name="UserCompleteProfile" component={UserCompleteProfile} />
           <Stack.Screen name="ReportScreen" component={ReportScreen} />
+          <Stack.Screen name="ReportKycScreen" component={ReportKycScreen} />
       
         </Stack.Navigator>
       </NavigationContainer>

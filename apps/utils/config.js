@@ -1,1 +1,1 @@
-export default DATABASE_NAME = 'DemoSourabhGera1.db'
+export default DATABASE_NAME = 'demoEazyErp.db'
