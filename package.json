@@ -10,12 +10,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.1.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "email-validator": "^2.0.4",
     "react": "17.0.2",
     "react-native": "0.66.1",
+    "react-native-autocomplete-input": "^5.0.2",
+    "react-native-datepicker": "^1.7.2",
     "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.8.0"
+    "react-native-screens": "^3.8.0",
+    "react-native-sqlite-storage": "^6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
